@@ -8,11 +8,22 @@
 
 function gameBoard() {
     const cells = 9;
-    const board = [];
+    const arr = [];
 
     for (let i = 0; i < cells; i++) {
-        board.push(i);
+        arr.push(i);
     }
+
+    const board = arr.map((index) => {
+        return {
+            position: index,
+            occupant: 0,
+        }
+    })
+
+    const availableCells = board.filter(board => board.occupant === 0)
+    
+    console.log(availableCells);
 }
 
 function gameController() {
@@ -26,10 +37,19 @@ function gameController() {
             token: 2,
         }
     ]
+
+    const board = gameBoard();
+
     let activePlayer = players[0];
 
     const getActivePlayer = () => {activePlayer};
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players [0];
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
+
+
+
+    function playTurn(position) {
+        board[position]
+    }
 }
