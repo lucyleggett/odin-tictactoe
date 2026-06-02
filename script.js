@@ -8,22 +8,36 @@
 
 function gameBoard() {
     const cells = 9;
-    const arr = [];
+    const board = [];
 
     for (let i = 0; i < cells; i++) {
-        arr.push(i);
+        board[i] = [];
+        board[i].push(Cell());
     }
 
-    const board = arr.map((index) => {
-        return {
-            position: index,
-            occupant: 0,
-        }
-    })
+    const playTurn = (position, player) => {
+        const availableCells = board.filter(board => board.occupant === 0);
+        if(!availableCells.length) return;
 
-    const availableCells = board.filter(board => board.occupant === 0)
+        const chosenCell = board.cell[position];
+        chosenCell.addToken(player);
+    }
+    console.log(board);
+}
+
+function Cell() {
+    let occupant = 0;
     
-    console.log(availableCells);
+    const addToken = (player) => {
+        occupant = player;
+    }
+
+    const getOccupant = () => occupant;
+
+    return {
+        addToken,
+        getOccupant,
+    }
 }
 
 function gameController() {
@@ -47,9 +61,10 @@ function gameController() {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
-
-
     function playTurn(position) {
-        board[position]
+        
     }
+
+    playTurn(3);
+    console.log(gameBoard());
 }
