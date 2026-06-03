@@ -126,9 +126,13 @@ function gameController() {
             console.log("Invalid move. That cell has already been occupied.");
         } else {
             console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
-            checkForWinner();
-            switchPlayerTurn();
-            announceRound();
+            if (checkForWinner()) {
+                console.log("Great game! Thanks for playing. Here's the final board:")
+                board.printBoard();
+            } else {
+                switchPlayerTurn();
+                announceRound();
+            }
         }
     }
 
