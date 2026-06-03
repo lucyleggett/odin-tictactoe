@@ -78,7 +78,7 @@ function gameController() {
         const currentBoard = board.getBoard();
         const availableCells = currentBoard.flat().filter(cell => cell.getOccupant() === 0);
         if (availableCells.length === 0) {
-            console.log("Game over! All available cells have been occupied.")
+            console.log("Game over! All available cells have been occupied, and sadly there is no winner...")
             return true;
         }
         
