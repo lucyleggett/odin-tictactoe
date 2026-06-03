@@ -1,11 +1,3 @@
-/* Pseudocode
-
-1. Create gameBoard array, using a for loop to create 9 objects representing each square of the board.
-2. Create gameController function, which will contain player1 and player2 objects. Will track if they're "X" or "O", number of turns taken and which square of the board they last played on.
-3. 
-
-*/
-
 function gameBoard() {
     const rows = 3;
     const columns = 3;
