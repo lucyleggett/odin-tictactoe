@@ -22,8 +22,8 @@ function gameBoard() {
 
     const playToken = (row, column, player) => {
         const chosenCell = board[row][column];
-        if (chosenCell.occupant !== 0) return;
-        board[row][column].addToken(player);
+        if (chosenCell.getOccupant() !== 0) return;
+        chosenCell.addToken(player);
     }
 
     const printBoard = () => {
@@ -73,9 +73,9 @@ function gameController() {
         console.log(`It's ${getActivePlayer().name}'s turn.`);
     }
 
-    const playTurn = (row, column, player) => {
+    const playTurn = (row, column) => {
         console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
-        board.playToken(row, column, player);
+        board.playToken(row, column, getActivePlayer().token);
 
         switchPlayerTurn();
         announceRound();
@@ -83,7 +83,7 @@ function gameController() {
 
     announceRound();
 
-    return { playTurn, getActivePlayer, };
+    return { playTurn, announceRound, getActivePlayer, };
 }
 
 const game = gameController();
