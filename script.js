@@ -28,7 +28,7 @@ function gameBoard() {
 
     const printBoard = () => {
         const boardWithOccupants = board.map((row) =>
-        row.map((cell) => cell.occupant)
+        row.map((cell) => cell.getOccupant())
         );
         console.log(boardWithOccupants);
     };
