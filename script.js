@@ -81,7 +81,7 @@ function gameController() {
         announceRound();
     }
 
-    return { playRound, getActivePlayer, };
+    return { playTurn, getActivePlayer, };
 }
 
 const game = gameController();
