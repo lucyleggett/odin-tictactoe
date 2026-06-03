@@ -96,8 +96,14 @@ function gameController() {
             return occupants[0] !== 0 && occupants.every(occupant => occupant === occupants[0]);
         }
 
-        const isWinningDiagonal = (currentBoard) => {
+        const leftRightDiagonal = [];
+        leftRightDiagonal.push(currentBoard[0][0].getOccupant(), currentBoard[1][1].getOccupant(), currentBoard[2][2].getOccupant());
 
+        const rightLeftDiagonal = [];
+        rightLeftDiagonal.push(currentBoard[0][2].getOccupant(), currentBoard[1][1].getOccupant(), currentBoard[2][0].getOccupant());
+
+        const isWinningDiagonal = (diagonal) => {
+            return diagonal[0] !== 0 && diagonal.every(occupant => occupant === diagonal[0]);
         }
         
         if (isWinningRow(currentBoard[0]) 
@@ -106,6 +112,8 @@ function gameController() {
             || isWinningColumn(column1)
             || isWinningColumn(column2)
             || isWinningColumn(column3)
+            || isWinningDiagonal(leftRightDiagonal)
+            || isWinningDiagonal(rightLeftDiagonal)
         ) {
             console.log(`${getActivePlayer().name} wins!`);
             return true;
