@@ -74,12 +74,51 @@ function gameController() {
         console.log(`It's ${getActivePlayer().name}'s turn.`);
     }
 
+    const checkForWinner = () => {
+        const currentBoard = board.getBoard();
+        const availableCells = currentBoard.flat().filter(cell => cell.getOccupant() === 0);
+        if (availableCells.length === 0) {
+            console.log("Game over! All available cells have been occupied.")
+            return true;
+        }
+        
+        const isWinningRow = (row) => {
+            const occupants = row.map(cell => cell.getOccupant());
+            return occupants[0] !== 0 && occupants.every(occupant => occupant === occupants[0]);
+        }
+        
+        const column1 = currentBoard.map(function(occupant, index) { return occupant[0]; })
+        const column2 = currentBoard.map(function(occupant, index) { return occupant[1]; })
+        const column3 = currentBoard.map(function(occupant, index) { return occupant[2]; })
+
+        const isWinningColumn = (column) => {
+            const occupants = column.map(cell => cell.getOccupant());
+            return occupants[0] !== 0 && occupants.every(occupant => occupant === occupants[0]);
+        }
+
+        const isWinningDiagonal = (currentBoard) => {
+
+        }
+        
+        if (isWinningRow(currentBoard[0]) 
+            || isWinningRow(currentBoard[1]) 
+            || isWinningRow(currentBoard[2])
+            || isWinningColumn(column1)
+            || isWinningColumn(column2)
+            || isWinningColumn(column3)
+        ) {
+            console.log(`${getActivePlayer().name} wins!`);
+            return true;
+        }
+    }
+
     const playTurn = (row, column) => {
         const success = board.playToken(row, column, getActivePlayer().token);
         if (!success) {
             console.log("Invalid move. That cell has already been occupied.");
         } else {
             console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
+            checkForWinner();
             switchPlayerTurn();
             announceRound();
         }
