@@ -22,8 +22,9 @@ function gameBoard() {
 
     const playToken = (row, column, player) => {
         const chosenCell = board[row][column];
-        if (chosenCell.getOccupant() !== 0) return;
+        if (chosenCell.getOccupant() !== 0) return false;
         chosenCell.addToken(player);
+        return true;
     }
 
     const printBoard = () => {
@@ -74,11 +75,14 @@ function gameController() {
     }
 
     const playTurn = (row, column) => {
-        console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
-        board.playToken(row, column, getActivePlayer().token);
-
-        switchPlayerTurn();
-        announceRound();
+        const success = board.playToken(row, column, getActivePlayer().token);
+        if (!success) {
+            console.log("Invalid move. That cell has already been occupied.");
+        } else {
+            console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
+            switchPlayerTurn();
+            announceRound();
+        }
     }
 
     announceRound();
