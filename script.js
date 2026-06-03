@@ -36,9 +36,6 @@ function gameBoard() {
     return { getBoard, playToken, printBoard };
 }
 
-        chosenCell = board.cell[position];
-        chosenCell.occupant = player;
-
 function Cell() {
     let occupant = 0;
 
