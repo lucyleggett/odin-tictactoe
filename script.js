@@ -62,7 +62,7 @@ function gameController() {
 
     let activePlayer = players[0];
 
-    const getActivePlayer = () => {activePlayer};
+    const getActivePlayer = () => activePlayer;
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -74,12 +74,14 @@ function gameController() {
     }
 
     const playTurn = (row, column, player) => {
-        console.log("${getActivePlayer().name} has occupied cell ${row},${column}.")
+        console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
         board.playToken(row, column, player);
 
         switchPlayerTurn();
         announceRound();
     }
+
+    announceRound();
 
     return { playTurn, getActivePlayer, };
 }
