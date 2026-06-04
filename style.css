@@ -11,3 +11,13 @@
     margin: 2px;
     cursor: pointer;
 }
+
+.player-one {
+    content: "X";
+    background-color: aquamarine;
+}
+
+.player-two {
+    content: "O";
+    background-color: pink;
+}

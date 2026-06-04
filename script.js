@@ -2,6 +2,7 @@ function GameBoard() {
     const rows = 3;
     const columns = 3;
     const board = [];
+    const display = Display();
 
     for (let i = 0; i < rows; i++) {
         board[i] = [];
@@ -16,6 +17,7 @@ function GameBoard() {
         const chosenCell = board[row][column];
         if (chosenCell.getOccupant() !== 0) return false;
         chosenCell.addToken(player);
+        display.renderToken(row, column, player);
         return true;
     }
 
@@ -43,7 +45,7 @@ function GameController() {
     const board = GameBoard();
     const display = Display();
 
-    display.renderBoard();
+    display.renderBoard(board);
 
     const boxButtons = document.querySelectorAll(".box");
     boxButtons.forEach(button => {
@@ -51,7 +53,7 @@ function GameController() {
             const row = button.id[0];
             const column = button.id[2];
             console.log(row, column);
-            playTurn(row, column);
+            playTurn(row, column, button);
         })
     })
 
@@ -145,15 +147,12 @@ function GameController() {
 }
 
 function Display() {
-    const gameBoard = GameBoard();
-
     const fragment = document.createDocumentFragment();
     const boardContainer = document.querySelector(".board");
 
-    const renderBoard = () => {
-        const board = gameBoard.getBoard();
-
-        board.forEach((row, rowIndex) => {
+    const renderBoard = (board) => {
+        const currentBoard = board.getBoard();
+        currentBoard.forEach((row, rowIndex) => {
             row.forEach((value, colIndex) => {
                 const box = document.createElement("button");
                 box.id = `${rowIndex}[${colIndex}]`;
@@ -165,11 +164,13 @@ function Display() {
         boardContainer.appendChild(fragment);
     }
 
-    const updateBoard = () => {
-        board.getOccupant();
+    const renderToken = (row, column, player) => {
+        const currentButton = document.getElementById(`${row}[${column}]`);
+        if (player === 1) currentButton.classList.add("player-one");
+        if (player === 2) currentButton.classList.add("player-two");
     }
 
-    return { renderBoard };
+    return { renderBoard, renderToken, };
 }
 
 const game = GameController();
