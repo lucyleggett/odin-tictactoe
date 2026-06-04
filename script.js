@@ -115,10 +115,10 @@ function GameController() {
         chosenCell.addToken(getActivePlayer().token);
         display.renderToken(row, column, getActivePlayer().token);
         if (checkForWinner()) {
-                message.announceWinner();
+                message.announceWinner(getActivePlayer());
             } else {
                 switchPlayerTurn();
-                message.announceRound();
+                message.announceRound(getActivePlayer());
             };
     }
 
@@ -135,7 +135,6 @@ function Display() {
             row.forEach((value, colIndex) => {
                 const box = document.createElement("button");
                 box.id = `${rowIndex}[${colIndex}]`;
-                box.textContent = box.id;
                 box.classList.add("box");
                 fragment.appendChild(box);
             })
@@ -155,9 +154,9 @@ function Display() {
 function Message() {
     const messageDiv = document.querySelector(".message");
 
-    const announceRound = () => { messageDiv.textContent = `It's ${getActivePlayer().name}'s turn.`; };
+    const announceRound = (player) => { messageDiv.textContent = `It's ${player.name}'s turn.`; };
 
-    const announceWinner = () => { messageDiv.textContent = `${getActivePlayer().name} wins!`; };
+    const announceWinner = (player) => { messageDiv.textContent = `${player.name} wins!`; };
 
     const announceTie = () => { messageDiv.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
 
