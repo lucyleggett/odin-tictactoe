@@ -44,7 +44,7 @@ function GameController() {
         button.addEventListener("click", (event) => {
             const row = button.id[0];
             const column = button.id[2];
-            console.log(row, column);
+            if (checkForWinner()) return;
             playTurn(row, column, button);
         })
     })
@@ -114,7 +114,6 @@ function GameController() {
             || isWinningDiagonal(leftRightDiagonal)
             || isWinningDiagonal(rightLeftDiagonal)
         ) {
-            console.log(`${getActivePlayer().name} wins!`);
             return true;
         }
     }
@@ -130,6 +129,7 @@ function GameController() {
             console.log("Invalid move. That cell has already been occupied.")
         };
         if (checkForWinner()) {
+                console.log(`${getActivePlayer().name} wins!`);
                 console.log("Great game! Thanks for playing. Here's the final board:")
                 board.printBoard();
             } else {
