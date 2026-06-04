@@ -13,14 +13,6 @@ function GameBoard() {
 
     const getBoard = () => board;
 
-    const playToken = (row, column, player) => {
-        const chosenCell = board[row][column];
-        if (chosenCell.getOccupant() !== 0) return false;
-        chosenCell.addToken(player);
-        display.renderToken(row, column, player);
-        return true;
-    }
-
     const printBoard = () => {
         const boardWithOccupants = board.map((row) =>
         row.map((cell) => cell.getOccupant())
@@ -28,7 +20,7 @@ function GameBoard() {
         console.log(boardWithOccupants);
     };
 
-    return { getBoard, playToken, printBoard };
+    return { getBoard, printBoard };
 }
 
 function Cell() {
@@ -128,19 +120,22 @@ function GameController() {
     }
 
     const playTurn = (row, column) => {
-        const success = board.playToken(row, column, getActivePlayer().token);
-        if (!success) {
-            console.log("Invalid move. That cell has already been occupied.");
-        } else {
+        const chosenCell = board.getBoard()[row][column];
+
+        if (chosenCell.getOccupant() === 0) {
+            chosenCell.addToken(getActivePlayer().token);
+            display.renderToken(row, column, getActivePlayer().token);
             console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
-            if (checkForWinner()) {
+        } else { 
+            console.log("Invalid move. That cell has already been occupied.")
+        };
+        if (checkForWinner()) {
                 console.log("Great game! Thanks for playing. Here's the final board:")
                 board.printBoard();
             } else {
                 switchPlayerTurn();
                 announceRound();
-            }
-        }
+            };
     }
 
     return { playTurn, announceRound, getActivePlayer, };
