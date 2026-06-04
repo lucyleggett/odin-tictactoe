@@ -136,19 +136,29 @@ function GameController() {
 
 function Display() {
     const gameBoard = GameBoard();
+
     const fragment = document.createDocumentFragment();
     const boardContainer = document.querySelector(".board");
 
     const renderBoard = () => {
         const board = gameBoard.getBoard();
+        let boxCount = 0;
+
         for (const row of board) {
-            for (const value of row) {
+            for (const cell of row) {
                 const box = document.createElement("button");
+                box.id = boxCount;
                 box.classList.add("box");
+                box.textContent = box.id;
+                boxCount += 1;
                 fragment.appendChild(box);
+                }
             }
-        }
         boardContainer.appendChild(fragment);
+    }
+
+    const updateBoard = () => {
+        board.getOccupant();
     }
 
     return { renderBoard };
