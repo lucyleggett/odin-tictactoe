@@ -1,4 +1,4 @@
-function gameBoard() {
+function GameBoard() {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -39,7 +39,7 @@ function Cell() {
     return { addToken, getOccupant, };
 }
 
-function gameController() {
+function GameController() {
     const board = gameBoard();
 
     const players = [
