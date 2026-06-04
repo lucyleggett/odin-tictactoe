@@ -40,7 +40,8 @@ function Cell() {
 }
 
 function GameController() {
-    const board = gameBoard();
+    const board = GameBoard();
+    const display = Display();
 
     const players = [
         {
@@ -133,4 +134,20 @@ function GameController() {
     return { playTurn, announceRound, getActivePlayer, };
 }
 
-const game = gameController();
+function Display() {
+    const board = GameBoard();
+    const fragment = document.createDocumentFragment();
+
+    const renderBoard = () => {
+        for (const row of board) {
+            for (const value of row) {
+                const box = document.createElement("div");
+                box.classList.add(".box");
+                fragment.appendChild(box);
+            }
+        }
+    }
+    
+    }
+
+const game = GameController();
