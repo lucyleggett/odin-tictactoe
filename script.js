@@ -13,14 +13,7 @@ function GameBoard() {
 
     const getBoard = () => board;
 
-    const printBoard = () => {
-        const boardWithOccupants = board.map((row) =>
-        row.map((cell) => cell.getOccupant())
-        );
-        console.log(boardWithOccupants);
-    };
-
-    return { getBoard, printBoard };
+    return { getBoard, };
 }
 
 function Cell() {
@@ -36,14 +29,15 @@ function Cell() {
 function GameController() {
     const board = GameBoard();
     const display = Display();
+    const message = Message();
 
     display.renderBoard(board);
 
     const boxButtons = document.querySelectorAll(".box");
     boxButtons.forEach(button => {
         button.addEventListener("click", (event) => {
-            const row = button.id[0];
-            const column = button.id[2];
+            const row = Number(button.id[0]);
+            const column = Number(button.id[2]);
             if (checkForWinner()) return;
             playTurn(row, column, button);
         })
@@ -68,16 +62,11 @@ function GameController() {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
-    const announceRound = () => {
-        board.printBoard();
-        console.log(`It's ${getActivePlayer().name}'s turn.`);
-    }
-
     const checkForWinner = () => {
         const currentBoard = board.getBoard();
         const availableCells = currentBoard.flat().filter(cell => cell.getOccupant() === 0);
         if (availableCells.length === 0) {
-            console.log("Game over! All available cells have been occupied, and sadly there is no winner...")
+            message.announceTie();
             return true;
         }
         
@@ -120,25 +109,20 @@ function GameController() {
 
     const playTurn = (row, column) => {
         const chosenCell = board.getBoard()[row][column];
+        console.log(`${chosenCell}`);
 
-        if (chosenCell.getOccupant() === 0) {
-            chosenCell.addToken(getActivePlayer().token);
-            display.renderToken(row, column, getActivePlayer().token);
-            console.log(`${getActivePlayer().name} has occupied cell ${row},${column}.`)
-        } else { 
-            console.log("Invalid move. That cell has already been occupied.")
-        };
+        if (chosenCell.getOccupant() !== 0) return;
+        chosenCell.addToken(getActivePlayer().token);
+        display.renderToken(row, column, getActivePlayer().token);
         if (checkForWinner()) {
-                console.log(`${getActivePlayer().name} wins!`);
-                console.log("Great game! Thanks for playing. Here's the final board:")
-                board.printBoard();
+                message.announceWinner();
             } else {
                 switchPlayerTurn();
-                announceRound();
+                message.announceRound();
             };
     }
 
-    return { playTurn, announceRound, getActivePlayer, };
+    return { playTurn, getActivePlayer, };
 }
 
 function Display() {
@@ -166,6 +150,18 @@ function Display() {
     }
 
     return { renderBoard, renderToken, };
+}
+
+function Message() {
+    const messageDiv = document.querySelector(".message");
+
+    const announceRound = () => { messageDiv.textContent = `It's ${getActivePlayer().name}'s turn.`; };
+
+    const announceWinner = () => { messageDiv.textContent = `${getActivePlayer().name} wins!`; };
+
+    const announceTie = () => { messageDiv.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
+
+    return { announceRound, announceWinner, announceTie }
 }
 
 const game = GameController();
