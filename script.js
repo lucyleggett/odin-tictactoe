@@ -43,6 +43,18 @@ function GameController() {
     const board = GameBoard();
     const display = Display();
 
+    display.renderBoard();
+
+    const boxButtons = document.querySelectorAll(".box");
+    boxButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            const row = button.id[0];
+            const column = button.id[2];
+            console.log(row, column);
+            playTurn(row, column);
+        })
+    })
+
     const players = [
         {
             name: "Player One",
@@ -128,8 +140,6 @@ function GameController() {
             }
         }
     }
-
-    display.renderBoard();
 
     return { playTurn, announceRound, getActivePlayer, };
 }
