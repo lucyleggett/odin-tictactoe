@@ -142,18 +142,16 @@ function Display() {
 
     const renderBoard = () => {
         const board = gameBoard.getBoard();
-        let boxCount = 0;
 
-        for (const row of board) {
-            for (const cell of row) {
+        board.forEach((row, rowIndex) => {
+            row.forEach((value, colIndex) => {
                 const box = document.createElement("button");
-                box.id = boxCount;
-                box.classList.add("box");
+                box.id = `${rowIndex}[${colIndex}]`;
                 box.textContent = box.id;
-                boxCount += 1;
+                box.classList.add("box");
                 fragment.appendChild(box);
-                }
-            }
+            })
+        })
         boardContainer.appendChild(fragment);
     }
 
