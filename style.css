@@ -1,0 +1,13 @@
+.board {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+}
+
+.box {
+    border: 2px solid blue;
+    background-color: transparent;
+    margin: 2px;
+    cursor: pointer;
+}

@@ -129,25 +129,29 @@ function GameController() {
         }
     }
 
-    announceRound();
+    display.renderBoard();
 
     return { playTurn, announceRound, getActivePlayer, };
 }
 
 function Display() {
-    const board = GameBoard();
+    const gameBoard = GameBoard();
     const fragment = document.createDocumentFragment();
+    const boardContainer = document.querySelector(".board");
 
     const renderBoard = () => {
+        const board = gameBoard.getBoard();
         for (const row of board) {
             for (const value of row) {
-                const box = document.createElement("div");
-                box.classList.add(".box");
+                const box = document.createElement("button");
+                box.classList.add("box");
                 fragment.appendChild(box);
             }
         }
+        boardContainer.appendChild(fragment);
     }
-    
-    }
+
+    return { renderBoard };
+}
 
 const game = GameController();
