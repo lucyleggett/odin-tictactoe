@@ -44,15 +44,25 @@ function GameController() {
         }
     ]
 
-    const submitBtn = document.querySelector(".submit");
-    submitBtn.addEventListener("click", (event) => {
+    const nextBtn = document.querySelector(".next");
+    nextBtn.addEventListener("click", (event) => {
         event.preventDefault();
         const playerOneName = document.getElementById("player-one").value;
         players[0].name = playerOneName;
+        display.transitionToNameTwo();
+        });
+
+    const readyBtn = document.querySelector(".ready");
+    readyBtn.addEventListener("click", (event) => {
+        event.preventDefault();
         const playerTwoName = document.getElementById("player-two").value;
         players[1].name = playerTwoName;
         display.transitionToMain();
-        });
+        message.announceRound(getActivePlayer());
+    })
+
+    let activePlayer = players[0];
+    const getActivePlayer = () => activePlayer;
 
     const boxButtons = document.querySelectorAll(".box");
     boxButtons.forEach(button => {
@@ -63,10 +73,6 @@ function GameController() {
             playTurn(row, column, button);
         })
     })
-
-    let activePlayer = players[0];
-
-    const getActivePlayer = () => activePlayer;
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -125,6 +131,7 @@ function GameController() {
         display.renderToken(row, column, getActivePlayer().token);
         if (checkForWinner()) {
                 message.announceWinner(getActivePlayer());
+                display.transitionToResults();
             } else {
                 switchPlayerTurn();
                 message.announceRound(getActivePlayer());
@@ -137,6 +144,9 @@ function GameController() {
 function Display() {
     const fragment = document.createDocumentFragment();
     const boardContainer = document.querySelector(".board");
+    const gameInitializer = document.querySelector(".game-initializer");
+    const mainGame = document.querySelector("main");
+    const resultsConveyor = document.querySelector(".results-conveyor");
 
     const renderBoard = (board) => {
         const currentBoard = board.getBoard();
@@ -157,19 +167,28 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
-    const transitionToMain = () => {
-        const gameInitializer = document.querySelector(".game-initializer");
-        gameInitializer.classList.add("disabled");
+    const transitionToNameTwo = () => {
+        const nameOneInput = document.querySelector(".name-one");
+        const nameTwoInput = document.querySelector(".name-two");
 
-        const mainGame = document.querySelector("main");
+        nameOneInput.classList.add("disabled");
+        nameTwoInput.classList.remove("disabled");
+    }
+
+    const transitionToMain = () => {
+        gameInitializer.classList.add("disabled");
         mainGame.classList.remove("disabled");
     }
 
-    return { renderBoard, renderToken, transitionToMain, };
+    const transitionToResults = () => {
+        mainGame.classList.add("disabled");
+        resultsConveyor.classList.remove("disabled");
+    }
+
+    return { renderBoard, renderToken, transitionToMain, transitionToNameTwo, transitionToResults };
 }
 
 function Message() {
-    const initializerMsg = document.querySelector(".initializer-message");
     const mainMsg = document.querySelector(".main-message");
     const resultsMsg = document.querySelector(".results-message");
 

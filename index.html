@@ -14,17 +14,15 @@
     <div class="container">
         <section class="game-initializer">
             <h1>Tic-tac-toe</h1>
-            <div class="initializer-message"></div>
-            <form action="">
-                <div class="input-row">
-                    <label for="player-one">Player One</label>
-                    <input id="player-one" type="text" name="player-one">
-                </div>
-                <div class="input-row">
-                    <label for="player-two">Player Two</label>
-                    <input id="player-two" type="text" name="player-two">
-                </div>
-                <button class="submit">Ready!</button>
+            <form class="name-one" method="get">
+                <label for="player-one">Player One's name</label>
+                <input id="player-one" type="text" name="player-one">
+                <button class="next">Next</button>
+            </form>
+            <form class="disabled name-two" action="" method="get">
+                <label for="player-two">Player Two's name</label>
+                <input id="player-two" type="text" name="player-two">
+                <button class="ready">Ready!</button>
             </form>
         </section>
         <main class="disabled">
