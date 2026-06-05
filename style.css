@@ -87,14 +87,14 @@ h1 {
     padding: var(--padding-standard);
 }
 
-.game-initializer {
+.game-initializer,
+main {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    height: 33%;
+    height: 100%;
     width: 100%;
-    margin-bottom: 100px;
 }
 
 .game-initializer .floater {
@@ -200,8 +200,14 @@ main [class*="player"] {
     color: var(--clr-player2);
 }
 
-.message {
+main {
+
+}
+
+.main-message,
+.results-message {
     display: flex;
+    flex-direction: column;
     align-items: center;
     height: 50px;
 }

@@ -37,10 +37,12 @@ function GameController() {
         {
             name: "",
             token: 1,
+            score: 0,
         },
         {
             name: "",
             token: 2,
+            score: 0,
         }
     ]
 
@@ -58,6 +60,7 @@ function GameController() {
         const playerTwoName = document.getElementById("player-two").value;
         players[1].name = playerTwoName;
         display.transitionToMain();
+        display.showScores(players[0], players[1]);
         message.announceRound(getActivePlayer());
     })
 
@@ -123,6 +126,10 @@ function GameController() {
         }
     }
 
+    const incrementScore = () => {
+        getActivePlayer().score += 1;
+    }
+
     const playTurn = (row, column) => {
         const chosenCell = board.getBoard()[row][column];
 
@@ -130,12 +137,14 @@ function GameController() {
         chosenCell.addToken(getActivePlayer().token);
         display.renderToken(row, column, getActivePlayer().token);
         if (checkForWinner()) {
+                incrementScore();
                 message.announceWinner(getActivePlayer());
                 display.transitionToResults();
             } else {
                 switchPlayerTurn();
                 message.announceRound(getActivePlayer());
             };
+            display.showScores(players[0], players[1]);
     }
 
     return { playTurn, getActivePlayer, };
@@ -167,6 +176,14 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
+    const showScores = (player1, player2) => {
+        const playerOneScore = document.querySelector(".player-one-score");
+        const playerTwoScore = document.querySelector(".player-two-score");
+
+        playerOneScore.textContent = `${player1.name}: ${player1.score}`;
+        playerTwoScore.textContent = `${player2.name}: ${player2.score}`;
+    }
+
     const transitionToNameTwo = () => {
         const nameOneInput = document.querySelector(".name-one");
         const nameTwoInput = document.querySelector(".name-two");
@@ -185,7 +202,7 @@ function Display() {
         resultsConveyor.classList.remove("disabled");
     }
 
-    return { renderBoard, renderToken, transitionToMain, transitionToNameTwo, transitionToResults };
+    return { renderBoard, renderToken, showScores, transitionToMain, transitionToNameTwo, transitionToResults };
 }
 
 function Message() {
