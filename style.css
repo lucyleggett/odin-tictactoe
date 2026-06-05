@@ -204,8 +204,28 @@ main {
 
 }
 
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.scoreboard > div {
+    display: flex;
+    align-items: center;
+}
+
+div.p1 > p,
+div.p2 > p {
+    display: inline;
+    font-family: var(--ff-xo);
+    font-size: var(--fs-h2);
+}
+
 p.name.active {
-    color: red;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-h1);
+    transition: font-weight 0.4s linear, font-size 0.4s linear;
 }
 
 .main-message,
