@@ -27,11 +27,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 :root {
-    --clr-primary: #1444C7;
     --clr-white: #FCFAFA;
+    --clr-pop: #1c3caf;
+    --clr-bright: #c2008b;
+    --clr-primary: #271c3f;
+    --clr-primary-dark: #1d142f;
 
     --ff-xo: "Doxent", Arial, sans-serif;
     --ff-body: "Work Sans", Arial, sans-serif;
+
+    --fs-body: 16px;
+    --fs-h1: 2.5em;
+    --fs-h2: 1.5em;
+    --fs-message: 1.5em;
+
+    --fw-bold: 700;
 
     --padding-standard: 10px;
 
@@ -40,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @font-face {
   font-family: 'Doxent';
-  src: url('fonts/Doxent-Regular.ttf') format('ttf');
+  src: url('fonts/Doxent-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -48,22 +58,98 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   line-height: 1.5;
+  font-size: var(--fs-body);
   -webkit-font-smoothing: antialiased;
   font-family: var(--ff-body);
   display: flex;
   justify-content: center;
+  background-color: var(--clr-primary-dark);
+  color: var(--clr-white);
+}
+
+h1 {
+    font-family: var(--ff-xo);
+    text-transform: uppercase;
+    font-size: var(--fs-h1);
+    letter-spacing: 2px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
     width: clamp(calc(var(--board-width) + (var(--padding-standard) * 2)), 50vw, 400px);
     margin: 10px;
     padding: var(--padding-standard);
-    border: 1px black solid;
-    border-radius: 10px;
+}
 
+.game-initializer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 33%;
+    width: 100%;
+}
+
+.game-initializer .floater {
+    margin: 50px;
+    padding: var(--padding-standard);
+    background-color: var(--clr-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-color: transparent;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+p.token {
+    color: var(--clr-pop);
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                 0px 8px 13px rgba(0,0,0,0.1),
+                 0px 18px 23px rgba(0,0,0,0.1);
+}
+
+label {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-bold);
+    margin: 10px;
+}
+
+input {
+    color: inherit;
+    background-color: #40315c;
+    border-color: transparent;
+    border-radius: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+.game-initializer > form:not(.disabled) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.game-initializer button {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: var(--fw-bold);
+    height: 40px;
+    width: 200px;
+    padding: 4px;
+    background-color: var(--clr-bright);
+    border: transparent;
+    border-radius: 5px;
+    color: var(--clr-white);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .board {
@@ -83,9 +169,15 @@ body {
     cursor: pointer;
 }
 
-[class*="player"] {
+[class*="player"],
+.token {
     font-family: var(--ff-xo);
     font-size: 80px;
+    font-weight: var(--fw-bold);
+    line-height: 1;
+}
+
+main [class*="player"] {
     color: var(--clr-white);
 }
 

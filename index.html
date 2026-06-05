@@ -15,14 +15,20 @@
         <section class="game-initializer">
             <h1>Tic-tac-toe</h1>
             <form class="name-one" method="get">
-                <label for="player-one">Player One's name</label>
-                <input id="player-one" type="text" name="player-one">
+                <div class="floater">
+                    <p class="token">X</p>
+                    <label for="player-one">Player One</label>
+                    <input id="player-one" type="text" name="player-one">
+                </div>
                 <button class="next">Next</button>
             </form>
             <form class="disabled name-two" action="" method="get">
-                <label for="player-two">Player Two's name</label>
-                <input id="player-two" type="text" name="player-two">
-                <button class="ready">Ready!</button>
+                <div class="floater">
+                    <p class="token">O</p>
+                    <label for="player-two">Player Two</label>
+                    <input id="player-two" type="text" name="player-two">
+                </div>
+                <button class="ready">Start game</button>
             </form>
         </section>
         <main class="disabled">
