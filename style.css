@@ -204,6 +204,10 @@ main {
 
 }
 
+p.name.active {
+    color: red;
+}
+
 .main-message,
 .results-message {
     display: flex;

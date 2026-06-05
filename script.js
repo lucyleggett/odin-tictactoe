@@ -60,7 +60,7 @@ function GameController() {
         const playerTwoName = document.getElementById("player-two").value;
         players[1].name = playerTwoName;
         display.transitionToMain();
-        display.showScores(players[0], players[1]);
+        display.showScores(players);
         message.announceRound(getActivePlayer());
     })
 
@@ -142,9 +142,10 @@ function GameController() {
                 display.transitionToResults();
             } else {
                 switchPlayerTurn();
+                display.switchPlayerHighlight();
                 message.announceRound(getActivePlayer());
             };
-            display.showScores(players[0], players[1]);
+            display.showScores(players);
     }
 
     return { playTurn, getActivePlayer, };
@@ -176,12 +177,24 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
-    const showScores = (player1, player2) => {
-        const playerOneScore = document.querySelector(".player-one-score");
-        const playerTwoScore = document.querySelector(".player-two-score");
+    const showScores = (playersArr) => {
+        const p1Score = document.querySelector(".p1 > .score");
+        const p2Score = document.querySelector(".p2 > .score");
+        const p1Name = document.querySelector(".p1 > .name");
+        const p2Name = document.querySelector(".p2 > .name");
 
-        playerOneScore.textContent = `${player1.name}: ${player1.score}`;
-        playerTwoScore.textContent = `${player2.name}: ${player2.score}`;
+        p1Name.textContent = `${playersArr[0].name}`;
+        p2Name.textContent = `${playersArr[1].name}`;
+        p1Score.textContent = `: ${playersArr[0].score}`;
+        p2Score.textContent = `: ${playersArr[1].score}`;
+    }
+
+    const switchPlayerHighlight = () => {
+        const p1Name = document.querySelector(".p1 > .name");
+        const p2Name = document.querySelector(".p2 > .name");
+
+        p1Name.classList.toggle("active");
+        p2Name.classList.toggle("active");
     }
 
     const transitionToNameTwo = () => {
@@ -202,7 +215,7 @@ function Display() {
         resultsConveyor.classList.remove("disabled");
     }
 
-    return { renderBoard, renderToken, showScores, transitionToMain, transitionToNameTwo, transitionToResults };
+    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToResults };
 }
 
 function Message() {
