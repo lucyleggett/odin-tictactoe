@@ -28,7 +28,8 @@ h1, h2, h3, h4, h5, h6 {
 
 :root {
     --clr-white: #FCFAFA;
-    --clr-pop: #1c3caf;
+    --clr-player1: #2932e1;
+    --clr-player2: #008566;
     --clr-bright: #c2008b;
     --clr-primary: #271c3f;
     --clr-primary-dark: #1d142f;
@@ -45,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 
     --padding-standard: 10px;
 
-    --board-width: calc((126px * 3) + (2px * 2));
+    --board-width: calc((126px * 3) + (3px * 2));
 }
 
 @font-face {
@@ -65,6 +66,7 @@ body {
   justify-content: center;
   background-color: var(--clr-primary-dark);
   color: var(--clr-white);
+  overflow: hidden;
 }
 
 h1 {
@@ -92,6 +94,7 @@ h1 {
     align-items: center;
     height: 33%;
     width: 100%;
+    margin-bottom: 100px;
 }
 
 .game-initializer .floater {
@@ -108,11 +111,13 @@ h1 {
 }
 
 p.token {
-    color: var(--clr-pop);
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                  0px 8px 13px rgba(0,0,0,0.1),
                  0px 18px 23px rgba(0,0,0,0.1);
 }
+
+p.token-x { color: var(--clr-player1); }
+p.token-o { color: var(--clr-player2); }
 
 label {
     text-transform: uppercase;
@@ -154,27 +159,31 @@ input {
 
 .board {
     display: grid;
-    grid-template: repeat(3, 33%) / repeat(3, 33%);
-    width: var(--board-width);
-    height: var(--board-width);
-    justify-content: center;
+    grid-template: repeat(3, 126px) / repeat(3, 126px);
     align-content: center;
+    gap: 3px;
 }
 
 .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--clr-primary);
     border: transparent;
     border-radius: 5px;
-    margin: 2px;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
 }
 
 [class*="player"],
 .token {
     font-family: var(--ff-xo);
-    font-size: 80px;
+    font-size: 90px;
     font-weight: var(--fw-bold);
     line-height: 1;
+    padding: 7px 7px 0px 16px;
+    text-align: center;
 }
 
 main [class*="player"] {
@@ -183,10 +192,12 @@ main [class*="player"] {
 
 .player-one::after {
     content: "X";
+    color: var(--clr-player1);
 }
 
 .player-two::after {
     content: "O";
+    color: var(--clr-player2);
 }
 
 .message {
