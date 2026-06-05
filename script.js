@@ -61,7 +61,6 @@ function GameController() {
         players[1].name = playerTwoName;
         display.transitionToMain();
         display.showScores(players);
-        message.announceRound(getActivePlayer());
     })
 
     let activePlayer = players[0];
@@ -143,7 +142,6 @@ function GameController() {
             } else {
                 switchPlayerTurn();
                 display.switchPlayerHighlight();
-                message.announceRound(getActivePlayer());
             };
             display.showScores(players);
     }
@@ -222,13 +220,11 @@ function Message() {
     const mainMsg = document.querySelector(".main-message");
     const resultsMsg = document.querySelector(".results-message");
 
-    const announceRound = (player) => { mainMsg.textContent = `It's ${player.name}'s turn.`; };
-
     const announceWinner = (player) => { resultsMsg.textContent = `${player.name} wins!`; };
 
     const announceTie = () => { resultsMsg.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
 
-    return { announceRound, announceWinner, announceTie }
+    return { announceWinner, announceTie }
 }
 
 const game = GameController();
