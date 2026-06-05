@@ -51,6 +51,7 @@ function GameController() {
         players[0].name = playerOneName;
         const playerTwoName = document.getElementById("player-two").value;
         players[1].name = playerTwoName;
+        display.transitionToMain();
         });
 
     const boxButtons = document.querySelectorAll(".box");
@@ -156,17 +157,27 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
-    return { renderBoard, renderToken };
+    const transitionToMain = () => {
+        const gameInitializer = document.querySelector(".game-initializer");
+        gameInitializer.classList.add("disabled");
+
+        const mainGame = document.querySelector("main");
+        mainGame.classList.remove("disabled");
+    }
+
+    return { renderBoard, renderToken, transitionToMain, };
 }
 
 function Message() {
-    const messageDiv = document.querySelector(".message");
+    const initializerMsg = document.querySelector(".initializer-message");
+    const mainMsg = document.querySelector(".main-message");
+    const resultsMsg = document.querySelector(".results-message");
 
-    const announceRound = (player) => { messageDiv.textContent = `It's ${player.name}'s turn.`; };
+    const announceRound = (player) => { mainMsg.textContent = `It's ${player.name}'s turn.`; };
 
-    const announceWinner = (player) => { messageDiv.textContent = `${player.name} wins!`; };
+    const announceWinner = (player) => { resultsMsg.textContent = `${player.name} wins!`; };
 
-    const announceTie = () => { messageDiv.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
+    const announceTie = () => { resultsMsg.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
 
     return { announceRound, announceWinner, announceTie }
 }

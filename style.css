@@ -102,3 +102,7 @@ body {
     align-items: center;
     height: 50px;
 }
+
+.disabled {
+    display: none;
+}

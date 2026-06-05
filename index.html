@@ -12,20 +12,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tic-tac-toe</h1>
-        <div class="message"></div>
-        <form action="">
-            <div class="input-row">
-                <label for="player-one">Player One</label>
-                <input id="player-one" type="text" name="player-one">
-            </div>
-            <div class="input-row">
-                <label for="player-two">Player Two</label>
-                <input id="player-two" type="text" name="player-two">
-            </div>
-            <button class="submit">Ready!</button>
-        </form>
-        <div class="board"></div>
+        <section class="game-initializer">
+            <h1>Tic-tac-toe</h1>
+            <div class="initializer-message"></div>
+            <form action="">
+                <div class="input-row">
+                    <label for="player-one">Player One</label>
+                    <input id="player-one" type="text" name="player-one">
+                </div>
+                <div class="input-row">
+                    <label for="player-two">Player Two</label>
+                    <input id="player-two" type="text" name="player-two">
+                </div>
+                <button class="submit">Ready!</button>
+            </form>
+        </section>
+        <main class="disabled">
+            <h1>Tic-tac-toe</h1>
+            <div class="main-message"></div>
+            <div class="board"></div>
+        </main>
+        <section class="results-conveyor" class="disabled">
+            <div class="results-message"></div>
+        </section>
     </div>
 </body>
 </html>
