@@ -33,6 +33,26 @@ function GameController() {
 
     display.renderBoard(board);
 
+    let players = [
+        {
+            name: "",
+            token: 1,
+        },
+        {
+            name: "",
+            token: 2,
+        }
+    ]
+
+    const submitBtn = document.querySelector(".submit");
+    submitBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        const playerOneName = document.getElementById("player-one").value;
+        players[0].name = playerOneName;
+        const playerTwoName = document.getElementById("player-two").value;
+        players[1].name = playerTwoName;
+        });
+
     const boxButtons = document.querySelectorAll(".box");
     boxButtons.forEach(button => {
         button.addEventListener("click", (event) => {
@@ -42,17 +62,6 @@ function GameController() {
             playTurn(row, column, button);
         })
     })
-
-    const players = [
-        {
-            name: "Player One",
-            token: 1,
-        },
-        {
-            name: "Player Two",
-            token: 2,
-        }
-    ]
 
     let activePlayer = players[0];
 
@@ -109,7 +118,6 @@ function GameController() {
 
     const playTurn = (row, column) => {
         const chosenCell = board.getBoard()[row][column];
-        console.log(`${chosenCell}`);
 
         if (chosenCell.getOccupant() !== 0) return;
         chosenCell.addToken(getActivePlayer().token);
@@ -148,7 +156,7 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
-    return { renderBoard, renderToken, };
+    return { renderBoard, renderToken };
 }
 
 function Message() {
