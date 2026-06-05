@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 
     --padding-standard: 10px;
 
-    --board-width: calc((126px * 3) + (3px * 2));
+    --board-width: calc((126px * 3) + (5px * 2));
 }
 
 @font-face {
@@ -161,7 +161,7 @@ input {
     display: grid;
     grid-template: repeat(3, 126px) / repeat(3, 126px);
     align-content: center;
-    gap: 3px;
+    gap: 5px;
 }
 
 .box {
