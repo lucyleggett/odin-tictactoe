@@ -229,6 +229,7 @@ function Display() {
     const transitionToNameTwo = () => {
         document.querySelector(".name-one").classList.add("disabled");
         document.querySelector(".name-two").classList.remove("disabled");
+        document.getElementById("player-two").focus();
     }
 
     const transitionToMain = () => {

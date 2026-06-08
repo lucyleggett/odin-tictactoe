@@ -138,6 +138,11 @@ input {
     text-align: center;
 }
 
+input:focus,
+input:focus-visible {
+    outline: none;
+}
+
 .game-initializer > form:not(.disabled) {
     display: flex;
     flex-direction: column;
