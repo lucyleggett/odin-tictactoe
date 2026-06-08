@@ -206,7 +206,7 @@ function Message() {
     const mainMsg = document.querySelector(".main-message");
     const resultsMsg = document.querySelector(".results-message");
 
-    const announceWinner = (player) => { resultsMsg.textContent = `${player.name} wins!`; };
+    const announceWinner = (player) => { resultsMsg.textContent = `${player.name} won!`; };
 
     const announceTie = () => { resultsMsg.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
 
