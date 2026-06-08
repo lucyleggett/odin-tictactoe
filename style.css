@@ -285,6 +285,7 @@ p.name.active {
 }
 
 .results-message {
+    font-size: var(--fs-h2);
     font-weight: var(--fw-bold);
 }
 
@@ -295,6 +296,7 @@ p.name.active {
 
 .victor {
     font-size: var(--fs-h1);
+    font-weight: var(--fw-bold);
     font-family: var(--ff-xo);
     text-align: center;
     color: var(--clr-bright);
