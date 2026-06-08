@@ -152,9 +152,6 @@ function GameController() {
 function Display() {
     const fragment = document.createDocumentFragment();
     const boardContainer = document.querySelector(".board");
-    const gameInitializer = document.querySelector(".game-initializer");
-    const mainGame = document.querySelector("main");
-    const resultsConveyor = document.querySelector(".results-conveyor");
 
     const renderBoard = (board) => {
         const currentBoard = board.getBoard();
@@ -176,41 +173,30 @@ function Display() {
     }
 
     const showScores = (playersArr) => {
-        const p1Score = document.querySelector(".p1 > .score");
-        const p2Score = document.querySelector(".p2 > .score");
-        const p1Name = document.querySelector(".p1 > .name");
-        const p2Name = document.querySelector(".p2 > .name");
-
-        p1Name.textContent = `${playersArr[0].name}`;
-        p2Name.textContent = `${playersArr[1].name}`;
-        p1Score.textContent = `: ${playersArr[0].score}`;
-        p2Score.textContent = `: ${playersArr[1].score}`;
+        document.querySelector(".p1 > .name").textContent = `${playersArr[0].name}`;
+        document.querySelector(".p2 > .name").textContent = `${playersArr[1].name}`;
+        document.querySelector(".p1 > .score").textContent = `: ${playersArr[0].score}`;
+        document.querySelector(".p2 > .score").textContent = `: ${playersArr[1].score}`;
     }
 
     const switchPlayerHighlight = () => {
-        const p1Name = document.querySelector(".p1 > .name");
-        const p2Name = document.querySelector(".p2 > .name");
-
-        p1Name.classList.toggle("active");
-        p2Name.classList.toggle("active");
+        document.querySelector(".p1 > .name").classList.toggle("active");
+        document.querySelector(".p2 > .name").classList.toggle("active");
     }
 
     const transitionToNameTwo = () => {
-        const nameOneInput = document.querySelector(".name-one");
-        const nameTwoInput = document.querySelector(".name-two");
-
-        nameOneInput.classList.add("disabled");
-        nameTwoInput.classList.remove("disabled");
+        document.querySelector(".name-one").classList.add("disabled");
+        document.querySelector(".name-two").classList.remove("disabled");
     }
 
     const transitionToMain = () => {
-        gameInitializer.classList.add("disabled");
-        mainGame.classList.remove("disabled");
+        document.querySelector(".game-initializer").classList.add("disabled");
+        document.querySelector("main").classList.remove("disabled");
     }
 
     const transitionToResults = () => {
-        mainGame.classList.add("disabled");
-        resultsConveyor.classList.remove("disabled");
+        document.querySelector(".blur-overlay").classList.remove("disabled");
+        document.querySelector(".results-conveyor").classList.remove("disabled");
     }
 
     return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToResults };
