@@ -284,10 +284,6 @@ p.name.active {
     font-weight: var(--fw-bold);
 }
 
-.results-conveyor > button {
-    margin: 3px;
-}
-
 .disabled {
     display: none;
 }

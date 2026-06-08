@@ -1,19 +1,23 @@
 function GameBoard() {
     const rows = 3;
     const columns = 3;
-    const board = [];
+    let board = []; 
     const display = Display();
 
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < columns; j++) {
-            board[i].push(Cell());
+    const initializeBoard = () => {
+        board = [];
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i].push(Cell());
+            }
         }
+        return board;
     }
 
     const getBoard = () => board;
 
-    return { getBoard, };
+    return { initializeBoard, getBoard, };
 }
 
 function Cell() {
@@ -31,6 +35,7 @@ function GameController() {
     const display = Display();
     const message = Message();
 
+    board.initializeBoard();
     display.renderBoard(board);
 
     let players = [
@@ -66,15 +71,24 @@ function GameController() {
     let activePlayer = players[0];
     const getActivePlayer = () => activePlayer;
 
-    const boxButtons = document.querySelectorAll(".box");
-    boxButtons.forEach(button => {
-        button.addEventListener("click", (event) => {
-            const row = Number(button.id[0]);
-            const column = Number(button.id[2]);
-            if (checkForWinner()) return;
-            playTurn(row, column, button);
-        })
-    })
+    const addBoxListeners = () => {
+        document.querySelectorAll(".box").forEach(button => {
+            button.addEventListener("click", (event) => {
+                const row = Number(button.id[0]);
+                const column = Number(button.id[2]);
+                if (checkForWinner()) return;
+                playTurn(row, column, button);
+            });
+        });
+    }
+
+    addBoxListeners();
+
+    const nextGameBtn = document.querySelector(".another");
+    nextGameBtn.addEventListener("click", () => {
+        display.transitionToFromResults();
+        resetGame();
+    });
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -82,11 +96,6 @@ function GameController() {
 
     const checkForWinner = () => {
         const currentBoard = board.getBoard();
-        const availableCells = currentBoard.flat().filter(cell => cell.getOccupant() === 0);
-        if (availableCells.length === 0) {
-            message.announceTie();
-            return true;
-        }
         
         const isWinningRow = (row) => {
             const occupants = row.map(cell => cell.getOccupant());
@@ -135,15 +144,29 @@ function GameController() {
         if (chosenCell.getOccupant() !== 0) return;
         chosenCell.addToken(getActivePlayer().token);
         display.renderToken(row, column, getActivePlayer().token);
+        
+        const availableCells = board.getBoard().flat().filter(cell => cell.getOccupant() === 0);
+        
         if (checkForWinner()) {
                 incrementScore();
                 message.announceWinner(getActivePlayer());
-                display.transitionToResults();
+                display.transitionToFromResults();
+            } else if (availableCells.length === 0) {
+                message.announceTie();
+                display.transitionToFromResults();
             } else {
                 switchPlayerTurn();
                 display.switchPlayerHighlight();
             };
             display.showScores(players);
+    }
+
+    const resetGame = () => {
+        board.initializeBoard();
+        display.resetBoard();
+        addBoxListeners();
+        activePlayer = players[0];
+        display.switchPlayerHighlight();
     }
 
     return { playTurn, getActivePlayer, };
@@ -194,12 +217,26 @@ function Display() {
         document.querySelector("main").classList.remove("disabled");
     }
 
-    const transitionToResults = () => {
-        document.querySelector(".blur-overlay").classList.remove("disabled");
-        document.querySelector(".results-conveyor").classList.remove("disabled");
+    const transitionToFromResults = () => {
+        document.querySelector(".blur-overlay").classList.toggle("disabled");
+        document.querySelector(".results-conveyor").classList.toggle("disabled");
     }
 
-    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToResults };
+    const resetBoard = (board) => {
+        boardContainer.innerHTML = "";
+        const newFragment = document.createDocumentFragment();
+        for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const box = document.createElement("button");
+            box.id = `${i}[${j}]`;
+            box.classList.add("box");
+            newFragment.appendChild(box);
+        }
+    }
+    boardContainer.appendChild(newFragment);
+}
+
+    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, resetBoard };
 }
 
 function Message() {
@@ -208,7 +245,7 @@ function Message() {
 
     const announceWinner = (player) => { resultsMsg.textContent = `${player.name} won!`; };
 
-    const announceTie = () => { resultsMsg.textContent = "Game over! All available cells have been occupied, and sadly there is no winner..."; };
+    const announceTie = () => { resultsMsg.textContent = "Game over! It's a tie..."; };
 
     return { announceWinner, announceTie }
 }
