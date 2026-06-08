@@ -280,8 +280,19 @@ p.name.active {
 }
 
 .results-message {
-    font-size: var(--fs-h2);
     font-weight: var(--fw-bold);
+}
+
+.drumroll {
+    font-size: var(--fs-h2);
+    margin-bottom: 10px;
+}
+
+.victor {
+    font-size: var(--fs-h1);
+    font-family: var(--ff-xo);
+    text-align: center;
+    color: var(--clr-bright);
 }
 
 .disabled {

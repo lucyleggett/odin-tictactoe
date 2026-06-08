@@ -84,11 +84,15 @@ function GameController() {
 
     addBoxListeners();
 
-    const nextGameBtn = document.querySelector(".another");
-    nextGameBtn.addEventListener("click", () => {
+    document.querySelector(".anotherBtn").addEventListener("click", () => {
         display.transitionToFromResults();
         resetGame();
     });
+
+    document.querySelector(".resultsBtn").addEventListener("click", () => {
+        display.transitionToFinalResults();
+        message.announceVictor(determineVictor());
+    })
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -169,6 +173,21 @@ function GameController() {
         display.switchPlayerHighlight();
     }
 
+    const determineVictor = () => {
+        player1Score = players[0].score;
+        player2Score = players[1].score;
+        let winner;
+
+        if (player1Score === player2Score) {
+            winner = "Nobody...";
+        } else if (player1Score > player2Score) {
+            winner = `${players[0].name}`;
+        } else {
+            winner = `${players[1].name}`;
+        }
+        return winner;
+    }
+
     return { playTurn, getActivePlayer, };
 }
 
@@ -236,7 +255,14 @@ function Display() {
     boardContainer.appendChild(newFragment);
 }
 
-    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, resetBoard };
+    const transitionToFinalResults = () => {
+        document.querySelector("main").classList.add("disabled");
+        document.querySelector(".blur-overlay").classList.add("disabled");
+        document.querySelector(".results-conveyor").classList.add("disabled");
+        document.querySelector(".final-results").classList.remove("disabled");
+    }
+
+    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard };
 }
 
 function Message() {
@@ -247,7 +273,12 @@ function Message() {
 
     const announceTie = () => { resultsMsg.textContent = "Game over! It's a tie..."; };
 
-    return { announceWinner, announceTie }
+    const announceVictor = (victor) => {
+        document.querySelector(".drumroll").textContent = "And the winner is...";
+        document.querySelector(".victor").textContent = `${victor}`;
+    }
+
+    return { announceWinner, announceTie, announceVictor, }
 }
 
 const game = GameController();
