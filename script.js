@@ -189,7 +189,6 @@ function GameController() {
                 switchPlayerTurn();
                 display.switchPlayerHighlight();
             };
-            display.showIcons(players);
             display.showScores(players);
     }
 
@@ -198,7 +197,9 @@ function GameController() {
         display.resetBoard();
         addBoxListeners();
         activePlayer = players[0];
-        display.switchPlayerHighlight();
+        display.showIcons(players);
+        display.showScores(players);
+        display.resetHighlight();
     }
 
     const determineVictor = () => {
@@ -250,6 +251,7 @@ function Display() {
         p2IconDiv.innerHTML = "";
 
         const p1Icon = document.createElement('img');
+        p1Icon.classList.add("active");
         p1Icon.src = playersArr[0].iconSource;
         p1Icon.alt = playersArr[0].iconAlt;
         p1IconDiv.appendChild(p1Icon);
@@ -268,8 +270,8 @@ function Display() {
     }
 
     const switchPlayerHighlight = () => {
-        document.querySelector(".p1 > .name").classList.toggle("active");
-        document.querySelector(".p2 > .name").classList.toggle("active");
+        document.querySelector("div.icon-p1 > img").classList.toggle("active");
+        document.querySelector("div.icon-p2 > img").classList.toggle("active");
     }
 
     const transitionToNameTwo = () => {
@@ -300,6 +302,11 @@ function Display() {
         }
     }
     boardContainer.appendChild(newFragment);
+
+    const resetHighlight = () => {
+        document.querySelector("div.icon-p1 > img").classList.add("active");
+        document.querySelector("div.icon-p2 > img").classList.remove("active");
+    }
 }
 
     const transitionToFinalResults = () => {

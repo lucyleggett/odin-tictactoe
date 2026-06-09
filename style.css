@@ -259,20 +259,30 @@ main {
     margin-top: 50px;
 }
 
-div.p1 { grid-area: 1 / 1 / 2 / 2; }
-div.p2 { grid-area: 1 / 2 / 2 / 3; }
+div.p1 { grid-area: 1 / 1 / 3 / 2; }
+div.p2 { grid-area: 1 / 2 / 3 / 3; }
 
 div.p1,
 div.p2 {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    gap: 5px;
     justify-items: center;
+    align-items: center;
 }
 
 .scoreboard img {
     justify-self: center;
+    height: 65px;
+    width: 65px;
+    transition: height ease 0.5s, width ease 0.5s;
+}
+
+.icon-p1 > img.active,
+.icon-p2 > img.active {
     height: 100px;
     width: 100px;
+    transition: height ease 0.5s, width ease 0.5s;
 }
 
 div.p1 > p,
