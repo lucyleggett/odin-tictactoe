@@ -43,19 +43,33 @@ function GameController() {
             name: "",
             token: 1,
             score: 0,
+            icon: "",
         },
         {
             name: "",
             token: 2,
             score: 0,
+            icon: "",
         }
     ]
 
-    document.querySelectorAll(".icon").forEach(icon => {
+    document.querySelectorAll(".icon.p1").forEach(icon => {
         icon.addEventListener("click", (event) => {
             event.preventDefault();
             document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
-            icon.classList.toggle("chosen");
+            icon.classList.add("chosen");
+            players[0].icon = icon.id;
+            console.log(players);
+        });
+    });
+
+    document.querySelectorAll(".icon.p2").forEach(icon => {
+        icon.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
+            icon.classList.add("chosen");
+            players[1].icon = icon.id;
+            console.log(players);
         });
     });
 
