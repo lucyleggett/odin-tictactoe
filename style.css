@@ -241,6 +241,11 @@ main [class*="player"] {
     color: var(--clr-player2);
 }
 
+main {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .scoreboard {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -250,6 +255,8 @@ main [class*="player"] {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
+    margin-bottom: 75px;
+    margin-top: 50px;
 }
 
 div.p1 { grid-area: 1 / 1 / 2 / 2; }
@@ -272,11 +279,11 @@ div.p1 > p,
 div.p2 > p {
     display: inline;
     font-family: var(--ff-xo);
-    font-size: clamp(16px, 1.25em, 20px);
     text-align: center;
 }
 
-p.name { margin-right: 5px; }
+p.name { font-size: var(--fs-body) }
+p.score { font-size: 50px; }
 
 .main-message,
 .results-message {

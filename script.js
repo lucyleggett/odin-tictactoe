@@ -263,8 +263,8 @@ function Display() {
     const showScores = (playersArr) => {
         document.querySelector(".p1 > .name").textContent = `${playersArr[0].name}`;
         document.querySelector(".p2 > .name").textContent = `${playersArr[1].name}`;
-        document.querySelector(".p1 > .score").textContent = `: ${playersArr[0].score}`;
-        document.querySelector(".p2 > .score").textContent = `: ${playersArr[1].score}`;
+        document.querySelector(".p1 > .score").textContent = `${playersArr[0].score}`;
+        document.querySelector(".p2 > .score").textContent = `${playersArr[1].score}`;
     }
 
     const switchPlayerHighlight = () => {
