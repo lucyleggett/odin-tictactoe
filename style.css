@@ -170,6 +170,7 @@ button:not(.box) {
     grid-template: repeat(3, 110px) / repeat(3, 110px);
     align-content: center;
     gap: 5px;
+    margin-bottom: 120px;
 }
 
 .box {
@@ -231,6 +232,8 @@ div.p2 > p {
     font-family: var(--ff-xo);
     font-size: clamp(16px, 1.25em, 20px);
 }
+
+p.name { margin-right: 5px; }
 
 p.name.active {
     font-weight: var(--fw-bold);
