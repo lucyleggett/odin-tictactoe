@@ -120,6 +120,7 @@ function GameController() {
         display.transitionToFinalResults();
         message.announceVictor(determineVictor());
         display.cueResults(determineVictor());
+        display.cueConfetti();
     })
 
     const switchPlayerTurn = () => {
@@ -293,14 +294,14 @@ function Display() {
             box.classList.add("box");
             newFragment.appendChild(box);
         }
+        }
+        boardContainer.appendChild(newFragment);
     }
-    boardContainer.appendChild(newFragment);
 
     const resetHighlight = () => {
         document.querySelector("div.icon-p1 > img").classList.add("active");
         document.querySelector("div.icon-p2 > img").classList.remove("active");
-    }
-}
+        }
 
     const transitionToFinalResults = () => {
         document.querySelector("main").classList.add("disabled");
@@ -315,9 +316,77 @@ function Display() {
         winnerIcon.src = victor.iconSource;
         winnerIcon.alt = victor.iconAlt;
         winnerDiv.appendChild(winnerIcon);
-}
+    }
 
-    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, };
+    const cueConfetti = () => {
+        const confettiLayer = document.querySelector(".confetti-layer");
+        const images = [];
+        
+        for (let i = 0; i < 30; i++) {
+            const confetti = document.createElement("img");
+            confetti.classList.add("confetti");
+            confetti.src = "./images/party-popper.png";
+            const randomInt = Math.floor(Math.random() * (100 - 25 + 1)) + 25;
+            confetti.style.height = `${randomInt}px`;
+            confettiLayer.appendChild(confetti);
+            images.push(confetti);
+        }
+
+        Promise.all(images.map(img => new Promise(resolve => {
+                if (img.complete) resolve();
+                else img.addEventListener('load', resolve);
+        }))).then(() => {
+            const placedImages = [];
+            const maxAttempts = 50;
+
+            images.forEach((img) => {
+                let imgWidth = img.offsetWidth;
+                let imgHeight = img.offsetHeight;
+                let overlap = true;
+                let attempts = 0;
+                let randomX, randomY;
+
+                // Keep trying to find a spot until it doesn't overlap or we hit max attempts
+                while (overlap && attempts < maxAttempts) {
+                // Calculate random coordinates within screen boundaries
+                randomX = Math.floor(Math.random() * (window.innerWidth - imgWidth));
+                randomY = Math.floor(Math.random() * (window.innerHeight - imgHeight));
+
+                overlap = false;
+
+                // Check current random coordinates against all previously placed images
+                for (let i = 0; i < placedImages.length; i++) {
+                    const other = placedImages[i];
+
+                    // Axis-Aligned Bounding Box (AABB) collision detection
+                    if (
+                    randomX < other.x + other.width &&
+                    randomX + imgWidth > other.x &&
+                    randomY < other.y + other.height &&
+                    randomY + imgHeight > other.y
+                    ) {
+                    overlap = true; // Overlap detected! Break loop to try new coordinates.
+                    break;
+                    }
+                }
+                attempts++;
+                }
+
+                // Save the coordinates of the successfully placed image
+                placedImages.push({
+                x: randomX,
+                y: randomY,
+                width: imgWidth,
+                height: imgHeight
+                });
+
+                // Apply the styles to move the image
+                img.style.left = `${randomX}px`;
+                img.style.top = `${randomY}px`;
+            });
+        });
+    }
+    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, cueConfetti, };
 }
 
 function Message() {
