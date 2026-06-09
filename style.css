@@ -162,7 +162,8 @@ button > img {
 
 .icon-picker > button.icon {
     background-color: transparent;
-    border: none;
+    border: transparent;
+    border-radius: 50%;
     padding: 0;
     margin: 4px;
     width: 50px;
@@ -292,7 +293,7 @@ div.p2 > p {
     text-align: center;
 }
 
-p.name { font-size: var(--fs-body) }
+p.name { font-size: 20px }
 p.score { font-size: 50px; }
 
 .main-message,
@@ -342,9 +343,15 @@ p.score { font-size: 50px; }
     mask-composite: intersect; 
 }
 
+.final-results {
+    justify-items: center;
+    width: 100%;
+}
+
 .results-message {
     font-size: var(--fs-h2);
     font-weight: var(--fw-bold);
+    text-align: center;
 }
 
 .drumroll {

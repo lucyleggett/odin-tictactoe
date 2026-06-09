@@ -119,6 +119,7 @@ function GameController() {
     document.querySelector(".resultsBtn").addEventListener("click", () => {
         display.transitionToFinalResults();
         message.announceVictor(determineVictor());
+        display.cueResults(determineVictor());
     })
 
     const switchPlayerTurn = () => {
@@ -203,19 +204,11 @@ function GameController() {
     }
 
     const determineVictor = () => {
-        player1Score = players[0].score;
-        player2Score = players[1].score;
-        let winner;
-
-        if (player1Score === player2Score) {
-            winner = "Nobody...";
-        } else if (player1Score > player2Score) {
-            winner = `${players[0].name}`;
-        } else {
-            winner = `${players[1].name}`;
-        }
-        return winner;
-    }
+        const highestScorer = players.reduce((max, player) => 
+        player.score > max.score ? player : max
+        )
+        return highestScorer;
+    };
 
     return { playTurn, getActivePlayer, };
 }
@@ -316,7 +309,15 @@ function Display() {
         document.querySelector(".final-results").classList.remove("disabled");
     }
 
-    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard };
+    const cueResults = (victor) => {
+        const winnerDiv = document.querySelector(".winner-icon");
+        const winnerIcon = document.createElement("img");
+        winnerIcon.src = victor.iconSource;
+        winnerIcon.alt = victor.iconAlt;
+        winnerDiv.appendChild(winnerIcon);
+}
+
+    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, };
 }
 
 function Message() {
@@ -329,7 +330,7 @@ function Message() {
 
     const announceVictor = (victor) => {
         document.querySelector(".drumroll").textContent = "And the winner is...";
-        document.querySelector(".victor").textContent = `${victor}`;
+        document.querySelector(".victor").textContent = `${victor.name}`;
     }
 
     return { announceWinner, announceTie, announceVictor, }
