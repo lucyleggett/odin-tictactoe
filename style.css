@@ -143,6 +143,12 @@ input:focus-visible {
     outline: none;
 }
 
+.icon-picker {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 75px;
+}
+
 .game-initializer > form:not(.disabled) {
     display: flex;
     flex-direction: column;
@@ -150,7 +156,33 @@ input:focus-visible {
     width: 100%;
 }
 
-button:not(.box) {
+button > img {
+    width: 100%;
+}
+
+.icon-picker > button.icon {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 4px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition:  height 0.5s ease, width 0.5s ease;
+}
+
+.icon-picker > button:hover {
+    height: 65px;
+    width: 65px;
+    transition: height 0.5s ease-in-out, width 0.5s ease-in-out;
+}
+
+.icon-picker > button.chosen {
+    height: 65px;
+    width: 65px;
+}
+
+button.action {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: var(--fw-bold);

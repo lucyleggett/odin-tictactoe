@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com" type="module"></script>
 </head>
 <body>
     <div class="container">
@@ -16,19 +17,31 @@
             <h1>Tic-tac-toe</h1>
             <form class="name-one" method="get">
                 <div class="floater">
-                    <p class="token token-x">X</p>
                     <label for="player-one">Player One</label>
+                    <div class="icon-picker">
+                        <button class="icon"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Smilies/Alien.png" alt="Green alien emoji" /></button>
+                        <button class="icon"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Smilies/Cowboy%20Hat%20Face.png" alt="Yellow smiling emoji wearing a cowboy hat"/></button>
+                        <button class="icon"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Animals/Dolphin.png" alt="Blue dolphin spinning round" /></button>
+                        <button class="icon"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Smilies/Ghost.png" alt="White ghost emoji winking with its tongue out" /></button>
+                        <button class="icon"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Horns.png" alt="Purple smiling devil emoji"></button>
+                    </div>
                     <input id="player-one" type="text" name="player-one" autofocus maxlength="15">
                 </div>
-                <button class="next">Next</button>
+                <button class="action next">Next</button>
             </form>
             <form class="disabled name-two" action="" method="get">
                 <div class="floater">
-                    <p class="token token-o">O</p>
+                    <div class="icon-picker">
+                        <button class="icon"></button>
+                        <button class="icon"></button>
+                        <button class="icon"></button>
+                        <button class="icon"></button>
+                        <button class="icon"></button>
+                    </div>
                     <label for="player-two">Player Two</label>
                     <input id="player-two" type="text" name="player-two" maxlength="15">
                 </div>
-                <button class="ready">Start game</button>
+                <button class="action ready">Start game</button>
             </form>
         </section>
         <main class="disabled">
@@ -46,8 +59,8 @@
         <div class="blur-overlay disabled"></div>
         <section class="results-conveyor disabled">
             <div class="results-message"></div>
-            <button class="anotherBtn">Next game</button>
-            <button class="resultsBtn">Final results</button>
+            <button class="action anotherBtn">Next game</button>
+            <button class="action resultsBtn">Final results</button>
         </section>
         <section class="final-results disabled">
             <div class="drumroll"></div>

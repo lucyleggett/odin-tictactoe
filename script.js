@@ -51,6 +51,14 @@ function GameController() {
         }
     ]
 
+    document.querySelectorAll(".icon").forEach(icon => {
+        icon.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
+            icon.classList.toggle("chosen");
+        });
+    });
+
     const nextBtn = document.querySelector(".next");
     nextBtn.addEventListener("click", (event) => {
         event.preventDefault();
