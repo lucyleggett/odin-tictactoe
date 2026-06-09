@@ -118,8 +118,8 @@ p.token {
                  0px 18px 23px rgba(0,0,0,0.1);
 }
 
-p.token-x { color: var(--clr-player1); }
-p.token-o { color: var(--clr-player2); }
+/* p.token-x { color: var(--clr-player1); }
+p.token-o { color: var(--clr-player2); } */
 
 label {
     text-transform: uppercase;
@@ -222,11 +222,10 @@ button.action {
 .token {
     font-family: var(--ff-xo);
     font-size: 90px;
-    font-weight: var(--fw-bold);
     line-height: 1;
     padding: 7px 7px 0px 16px;
     text-align: center;
-    transition: font-size ease 0.2s;
+    transition: font-size ease 0.3s;
 }
 
 main [class*="player"] {
@@ -235,12 +234,10 @@ main [class*="player"] {
 
 .player-one::after {
     content: "X";
-    color: var(--clr-player1);
 }
 
 .player-two::after {
     content: "O";
-    color: var(--clr-player2);
 }
 
 main {
