@@ -43,13 +43,15 @@ function GameController() {
             name: "",
             token: 1,
             score: 0,
-            icon: "",
+            iconSource: "",
+            iconAlt: "",
         },
         {
             name: "",
             token: 2,
             score: 0,
-            icon: "",
+            iconSource: "",
+            iconAlt: "",
         }
     ]
 
@@ -58,7 +60,8 @@ function GameController() {
             event.preventDefault();
             document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
             icon.classList.add("chosen");
-            players[0].icon = icon.id;
+            players[0].iconSource = event.target.src;
+            players[0].iconAlt = event.target.alt
             console.log(players);
         });
     });
@@ -68,7 +71,8 @@ function GameController() {
             event.preventDefault();
             document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
             icon.classList.add("chosen");
-            players[1].icon = icon.id;
+            players[1].iconSource = event.target.src;
+            players[1].iconAlt = event.target.alt
             console.log(players);
         });
     });
@@ -87,6 +91,7 @@ function GameController() {
         const playerTwoName = document.getElementById("player-two").value;
         players[1].name = playerTwoName;
         display.transitionToMain();
+        display.showIcons(players);
         display.showScores(players);
     })
 
@@ -184,6 +189,7 @@ function GameController() {
                 switchPlayerTurn();
                 display.switchPlayerHighlight();
             };
+            display.showIcons(players);
             display.showScores(players);
     }
 
@@ -236,6 +242,24 @@ function Display() {
         if (player === 2) currentButton.classList.add("player-two");
     }
 
+    const showIcons = (playersArr) => {
+        const p1IconDiv = document.querySelector(".icon-p1");
+        const p2IconDiv = document.querySelector(".icon-p2");
+
+        p1IconDiv.innerHTML = "";
+        p2IconDiv.innerHTML = "";
+
+        const p1Icon = document.createElement('img');
+        p1Icon.src = playersArr[0].iconSource;
+        p1Icon.alt = playersArr[0].iconAlt;
+        p1IconDiv.appendChild(p1Icon);
+
+        const p2Icon = document.createElement('img');
+        p2Icon.src = playersArr[1].iconSource;
+        p2Icon.alt = playersArr[1].iconAlt;
+        p2IconDiv.appendChild(p2Icon);
+    }
+
     const showScores = (playersArr) => {
         document.querySelector(".p1 > .name").textContent = `${playersArr[0].name}`;
         document.querySelector(".p2 > .name").textContent = `${playersArr[1].name}`;
@@ -285,7 +309,7 @@ function Display() {
         document.querySelector(".final-results").classList.remove("disabled");
     }
 
-    return { renderBoard, renderToken, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard };
+    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard };
 }
 
 function Message() {

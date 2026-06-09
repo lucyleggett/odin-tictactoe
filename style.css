@@ -242,20 +242,30 @@ main [class*="player"] {
 }
 
 .scoreboard {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    max-width: 350px;
+    height: 200px;
+    width: 100%;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
 }
 
-.scoreboard > div {
+div.p1 { grid-area: 1 / 1 / 2 / 2; }
+div.p2 { grid-area: 1 / 2 / 2 / 3; }
+
+div.p1,
+div.p2 {
     display: flex;
-    align-items: center;
-    height: 40px;
-    max-width: 100%;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.scoreboard img {
+    justify-self: center;
+    height: 100px;
+    width: 100px;
 }
 
 div.p1 > p,
@@ -263,15 +273,10 @@ div.p2 > p {
     display: inline;
     font-family: var(--ff-xo);
     font-size: clamp(16px, 1.25em, 20px);
+    text-align: center;
 }
 
 p.name { margin-right: 5px; }
-
-p.name.active {
-    font-weight: var(--fw-bold);
-    font-size: clamp(20px, 1.6em, 28px);
-    transition: font-weight 0.4s linear, font-size 0.4s linear;
-}
 
 .main-message,
 .results-message {
