@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 
     --padding-standard: 10px;
 
-    --board-width: calc((126px * 3) + (5px * 2));
+    --board-width: calc((110px * 3) + (5px * 2));
 }
 
 @font-face {
@@ -84,7 +84,7 @@ h1 {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    width: clamp(calc(var(--board-width) + (var(--padding-standard) * 2)), 50vw, 400px);
+    width: clamp(calc(var(--board-width) + (var(--padding-standard) * 2)), 50vw, 370px);
     margin: 10px;
     padding: var(--padding-standard);
 }
@@ -167,7 +167,7 @@ button:not(.box) {
 
 .board {
     display: grid;
-    grid-template: repeat(3, 126px) / repeat(3, 126px);
+    grid-template: repeat(3, 110px) / repeat(3, 110px);
     align-content: center;
     gap: 5px;
 }
@@ -208,32 +208,33 @@ main [class*="player"] {
     color: var(--clr-player2);
 }
 
-main {
-
-}
-
 .scoreboard {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-around;
-    gap: 20px;
 }
 
 .scoreboard > div {
     display: flex;
     align-items: center;
-    height: 70px;
+    height: 40px;
+    max-width: 100%;
 }
 
 div.p1 > p,
 div.p2 > p {
     display: inline;
     font-family: var(--ff-xo);
-    font-size: var(--fs-h2);
+    font-size: clamp(16px, 1.25em, 20px);
 }
 
 p.name.active {
     font-weight: var(--fw-bold);
-    font-size: var(--fs-h1);
+    font-size: clamp(20px, 1.6em, 28px);
     transition: font-weight 0.4s linear, font-size 0.4s linear;
 }
 
@@ -248,7 +249,7 @@ p.name.active {
 .blur-overlay {
     position: fixed;
     inset: 0;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1;
