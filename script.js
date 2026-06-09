@@ -117,10 +117,16 @@ function GameController() {
     });
 
     document.querySelector(".resultsBtn").addEventListener("click", () => {
+        const victor = determineVictor();
         display.transitionToFinalResults();
-        message.announceVictor(determineVictor());
-        display.cueResults(determineVictor());
-        display.cueConfetti();
+        display.cueResults(victor);
+        if (determineVictor()) {
+            display.cueBackground("confetti");
+            message.announceVictor(victor);
+        } else {
+            display.cueBackground("handshake");
+            message.announceTieResult();
+        }
     })
 
     const switchPlayerTurn = () => {
@@ -205,10 +211,17 @@ function GameController() {
     }
 
     const determineVictor = () => {
-        const highestScorer = players.reduce((max, player) => 
-        player.score > max.score ? player : max
-        )
-        return highestScorer;
+        let playersScores = [];
+        playersScores.push(players[0].score, players[1].score);
+        let highestScorer;
+        
+        if (playersScores.every(val => val === playersScores[0])) {
+        } else {
+            highestScorer = players.reduce((max, player) => 
+            player.score > max.score ? player : max
+            )
+            return highestScorer;
+        }
     };
 
     return { playTurn, getActivePlayer, };
@@ -313,23 +326,32 @@ function Display() {
     const cueResults = (victor) => {
         const winnerDiv = document.querySelector(".winner-icon");
         const winnerIcon = document.createElement("img");
-        winnerIcon.src = victor.iconSource;
-        winnerIcon.alt = victor.iconAlt;
+
+        if (!victor) {
+            winnerIcon.src = "./images/dove.png";
+            winnerIcon.alt = "White dove flying with a branch in its beak";
+        } else {
+            winnerIcon.src = victor.iconSource;
+            winnerIcon.alt = victor.iconAlt;
+        }
         winnerDiv.appendChild(winnerIcon);
     }
 
-    const cueConfetti = () => {
-        const confettiLayer = document.querySelector(".confetti-layer");
+    const cueBackground = (emoji) => {
+        const bgLayer = document.querySelector(".bg-layer");
         const images = [];
+        const confettiSrc = "./images/party-popper.png";
+        const handshakeSrc = "./images/handshake.png";
         
+        const src = emoji === "confetti" ? confettiSrc : handshakeSrc;
         for (let i = 0; i < 30; i++) {
-            const confetti = document.createElement("img");
-            confetti.classList.add("confetti");
-            confetti.src = "./images/party-popper.png";
+            const emojiImg = document.createElement("img");
+            emojiImg.classList.add("emoji");
+            emojiImg.src = src;
             const randomInt = Math.floor(Math.random() * (100 - 25 + 1)) + 25;
-            confetti.style.height = `${randomInt}px`;
-            confettiLayer.appendChild(confetti);
-            images.push(confetti);
+            emojiImg.style.height = `${randomInt}px`;
+            bgLayer.appendChild(emojiImg);
+            images.push(emojiImg);
         }
 
         Promise.all(images.map(img => new Promise(resolve => {
@@ -386,7 +408,7 @@ function Display() {
             });
         });
     }
-    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, cueConfetti, };
+    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, cueBackground, };
 }
 
 function Message() {
@@ -398,11 +420,16 @@ function Message() {
     const announceTie = () => { resultsMsg.textContent = "Game over! It's a tie..."; };
 
     const announceVictor = (victor) => {
+            document.querySelector(".drumroll").textContent = "And the winner is...";
+            document.querySelector(".victor").textContent = `${victor.name}`;
+        }
+    
+    const announceTieResult = () => {
         document.querySelector(".drumroll").textContent = "And the winner is...";
-        document.querySelector(".victor").textContent = `${victor.name}`;
+        document.querySelector(".victor").textContent = `Both of you`;
     }
 
-    return { announceWinner, announceTie, announceVictor, }
+    return { announceWinner, announceTie, announceVictor, announceTieResult, }
 }
 
 const game = GameController();

@@ -226,6 +226,7 @@ button.action {
     line-height: 1;
     padding: 7px 7px 0px 16px;
     text-align: center;
+    transition: font-size ease 0.2s;
 }
 
 main [class*="player"] {
@@ -351,7 +352,7 @@ p.score { font-size: 50px; }
     align-items: center;
 }
 
-.confetti-layer {
+.bg-layer {
     position: fixed;
     inset: 0;
     width: 100vw;
@@ -359,7 +360,7 @@ p.score { font-size: 50px; }
     pointer-events: none;
 }
 
-.confetti {
+.emoji {
     position: absolute;
     object-fit: cover;
     z-index: 1;
@@ -408,7 +409,6 @@ p.score { font-size: 50px; }
     font-weight: var(--fw-bold);
     font-family: var(--ff-xo);
     text-align: center;
-    color: var(--clr-bright);
 }
 
 .disabled {
