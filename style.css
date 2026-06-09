@@ -134,7 +134,7 @@ input {
     background-color: var(--clr-primary-light);
     border-color: transparent;
     border-radius: 20px;
-    margin: 10px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
