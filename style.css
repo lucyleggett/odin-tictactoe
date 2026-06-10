@@ -142,12 +142,12 @@ input:focus-visible {
 }
 
 input.invalid {
-    border: 1px solid var(--clr-bright);
+    border: 1px solid var(--clr-white);
 }
 
 .validation {
     font-size: var(--fs-body);
-    color: var(--clr-bright);
+    color: var(--clr-white);
     min-height: 1.5em;
 }
 
@@ -155,6 +155,7 @@ input.invalid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     height: 75px;
+    margin: 7px 0 7px 0;
 }
 
 .game-initializer > form:not(.disabled) {

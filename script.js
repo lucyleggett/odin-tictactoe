@@ -129,6 +129,8 @@ function GameController() {
     });
 
     let activePlayer = players[0];
+    let firstPlayer = players[0];
+
     const getActivePlayer = () => activePlayer;
 
     const addBoxListeners = () => {
@@ -237,10 +239,11 @@ function GameController() {
         board.initializeBoard();
         display.resetBoard();
         addBoxListeners();
-        activePlayer = players[0];
+        firstPlayer = firstPlayer === players[0] ? players[1] : players[0];
+        activePlayer = firstPlayer;
         display.showIcons(players);
         display.showScores(players);
-        display.resetHighlight();
+        display.resetHighlight(firstPlayer);
     }
 
     const determineVictor = () => {
@@ -344,10 +347,15 @@ function Display() {
         boardContainer.appendChild(newFragment);
     }
 
-    const resetHighlight = () => {
-        document.querySelector("div.icon-p1 > img").classList.add("active");
-        document.querySelector("div.icon-p2 > img").classList.remove("active");
+    const resetHighlight = (firstPlayer) => {
+        if (firstPlayer.token === 1) {
+            document.querySelector("div.icon-p1 > img").classList.add("active");
+            document.querySelector("div.icon-p2 > img").classList.remove("active");
+        } else {
+            document.querySelector("div.icon-p2 > img").classList.add("active");
+            document.querySelector("div.icon-p1 > img").classList.remove("active");
         }
+    }
 
     const transitionToFinalResults = () => {
         document.querySelector("main").classList.add("disabled");
@@ -441,7 +449,7 @@ function Display() {
             });
         });
     }
-    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, cueBackground, };
+    return { renderBoard, renderToken, showIcons, showScores, switchPlayerHighlight, resetHighlight, transitionToMain, transitionToNameTwo, transitionToFromResults, transitionToFinalResults, resetBoard, cueResults, cueBackground, };
 }
 
 function Message() {
