@@ -143,6 +143,10 @@ input:focus-visible {
     outline: none;
 }
 
+input.invalid {
+    border: 1px solid red;
+}
+
 .icon-picker {
     display: grid;
     grid-template-columns: repeat(5, 1fr);

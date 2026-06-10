@@ -30,10 +30,26 @@ function Cell() {
     return { addToken, getOccupant, };
 }
 
+function Validate() {
+    const checkInput = (inputElement) => {
+        if (!inputElement.value) {
+            inputElement.classList.add("invalid");
+            return false;
+        } else {
+            if (inputElement.classList.contains("invalid")) {
+                inputElement.classList.remove("invalid");
+            }
+            return true;
+        }
+    }
+    return { checkInput };
+}
+
 function GameController() {
     const board = GameBoard();
     const display = Display();
     const message = Message();
+    const validate = Validate();
 
     board.initializeBoard();
     display.renderBoard(board);
@@ -80,19 +96,23 @@ function GameController() {
     const nextBtn = document.querySelector(".next");
     nextBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        const playerOneName = document.getElementById("player-one").value;
-        players[0].name = playerOneName;
-        display.transitionToNameTwo();
-        });
+        const p1Input = document.getElementById("player-one");
+        if (validate.checkInput(p1Input)) {
+            players[0].name = p1Input.value;
+            display.transitionToNameTwo();
+        }
+    });
 
     const readyBtn = document.querySelector(".ready");
     readyBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        const playerTwoName = document.getElementById("player-two").value;
-        players[1].name = playerTwoName;
-        display.transitionToMain();
-        display.showIcons(players);
-        display.showScores(players);
+        const p2Input = document.getElementById("player-two");
+        if (validate.checkInput(p2Input)) {
+            players[1].name = p2Input.value;
+            display.transitionToMain();
+            display.showIcons(players);
+            display.showScores(players);
+        }
     })
 
     let activePlayer = players[0];
