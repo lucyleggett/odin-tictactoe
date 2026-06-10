@@ -35,14 +35,19 @@ function Validate() {
         if (!inputElement.value) {
             inputElement.classList.add("invalid");
             return false;
-        } else {
-            if (inputElement.classList.contains("invalid")) {
-                inputElement.classList.remove("invalid");
-            }
-            return true;
+        } else if (inputElement.classList.contains("invalid")) { 
+            inputElement.classList.remove("invalid");
         }
+        return true;
     }
-    return { checkInput };
+
+    const checkIcon = (btnSelector) => {
+        return [...document.querySelectorAll(`${btnSelector}`)].some(icon =>
+             icon.classList.contains("chosen")
+        );
+    }
+
+    return { checkInput, checkIcon, };
 }
 
 function GameController() {
@@ -77,8 +82,7 @@ function GameController() {
             document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
             icon.classList.add("chosen");
             players[0].iconSource = event.target.src;
-            players[0].iconAlt = event.target.alt
-            console.log(players);
+            players[0].iconAlt = event.target.alt;
         });
     });
 
@@ -88,8 +92,7 @@ function GameController() {
             document.querySelectorAll(".icon").forEach(i => i.classList.remove("chosen"));
             icon.classList.add("chosen");
             players[1].iconSource = event.target.src;
-            players[1].iconAlt = event.target.alt
-            console.log(players);
+            players[1].iconAlt = event.target.alt;
         });
     });
 
@@ -97,7 +100,12 @@ function GameController() {
     nextBtn.addEventListener("click", (event) => {
         event.preventDefault();
         const p1Input = document.getElementById("player-one");
-        if (validate.checkInput(p1Input)) {
+        const inputValid = validate.checkInput(p1Input);
+        const iconValid = validate.checkIcon(".icon.p1");
+
+        if (!iconValid) message.showError();
+        if (iconValid) message.clearError();
+        if (inputValid && iconValid) {
             players[0].name = p1Input.value;
             display.transitionToNameTwo();
         }
@@ -107,13 +115,18 @@ function GameController() {
     readyBtn.addEventListener("click", (event) => {
         event.preventDefault();
         const p2Input = document.getElementById("player-two");
-        if (validate.checkInput(p2Input)) {
+        const inputValid = validate.checkInput(p2Input);
+        const iconValid = validate.checkIcon(".icon.p2");
+
+        if (!iconValid) message.showError();
+        if (iconValid) message.clearError();
+        if (inputValid && iconValid) {
             players[1].name = p2Input.value;
             display.transitionToMain();
             display.showIcons(players);
             display.showScores(players);
         }
-    })
+    });
 
     let activePlayer = players[0];
     const getActivePlayer = () => activePlayer;
@@ -127,7 +140,7 @@ function GameController() {
                 playTurn(row, column, button);
             });
         });
-    }
+    };
 
     addBoxListeners();
 
@@ -435,6 +448,16 @@ function Message() {
     const mainMsg = document.querySelector(".main-message");
     const resultsMsg = document.querySelector(".results-message");
 
+    const showError = () => {
+        const activeForm = document.querySelector("form:not(.disabled)");
+        activeForm.querySelector(".validation").textContent = "Please select an icon";
+    }
+
+    const clearError = () => {
+        const activeForm = document.querySelector("form:not(.disabled)");
+        activeForm.querySelector(".validation").textContent = "";
+    }
+    
     const announceWinner = (player) => { resultsMsg.textContent = `${player.name} won!`; };
 
     const announceTie = () => { resultsMsg.textContent = "Game over! It's a tie..."; };
@@ -449,7 +472,7 @@ function Message() {
         document.querySelector(".victor").textContent = `Both of you`;
     }
 
-    return { announceWinner, announceTie, announceVictor, announceTieResult, }
+    return { showError, clearError, announceWinner, announceTie, announceVictor, announceTieResult, }
 }
 
 const game = GameController();

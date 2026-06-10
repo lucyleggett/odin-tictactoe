@@ -118,15 +118,13 @@ p.token {
                  0px 18px 23px rgba(0,0,0,0.1);
 }
 
-/* p.token-x { color: var(--clr-player1); }
-p.token-o { color: var(--clr-player2); } */
-
 label {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-size: var(--fs-h2);
     font-weight: var(--fw-bold);
     margin: 10px;
+    margin-top: 24px;
 }
 
 input {
@@ -144,7 +142,13 @@ input:focus-visible {
 }
 
 input.invalid {
-    border: 1px solid red;
+    border: 1px solid var(--clr-bright);
+}
+
+.validation {
+    font-size: var(--fs-body);
+    color: var(--clr-bright);
+    min-height: 1.5em;
 }
 
 .icon-picker {
