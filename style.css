@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
     --ff-body: "Work Sans", Arial, sans-serif;
 
     --fs-body: 16px;
-    --fs-h1: 2.5em;
+    --fs-h1: 2.4em;
     --fs-h2: 1.5em;
     --fs-message: 1.5em;
 
@@ -192,7 +192,7 @@ button > img {
     width: 65px;
 }
 
-button.action {
+button.action, .restartBtn {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: var(--fw-bold);
@@ -302,6 +302,10 @@ div.p2 > p {
 
 p.name { font-size: 20px }
 p.score { font-size: 50px; }
+p.name.active { 
+    color: var(--clr-bright);
+    transition: font-weight 0.3s linear, color 0.3s linear;
+}
 
 .main-message,
 .results-message {
@@ -354,6 +358,7 @@ p.score { font-size: 50px; }
     position: fixed;
     inset: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -415,6 +420,15 @@ p.score { font-size: 50px; }
     font-weight: var(--fw-bold);
     font-family: var(--ff-xo);
     text-align: center;
+}
+
+.restartBtn {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    z-index: 2;
 }
 
 .disabled {

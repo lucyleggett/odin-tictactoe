@@ -315,6 +315,8 @@ function Display() {
     const switchPlayerHighlight = () => {
         document.querySelector("div.icon-p1 > img").classList.toggle("active");
         document.querySelector("div.icon-p2 > img").classList.toggle("active");
+        document.querySelector("div.p1 > p.name").classList.toggle("active");
+        document.querySelector("div.p2 > p.name").classList.toggle("active");
     }
 
     const transitionToNameTwo = () => {
@@ -351,9 +353,13 @@ function Display() {
         if (firstPlayer.token === 1) {
             document.querySelector("div.icon-p1 > img").classList.add("active");
             document.querySelector("div.icon-p2 > img").classList.remove("active");
+            document.querySelector("div.p1 > p.name").classList.add("active");
+            document.querySelector("div.p2 > p.name").classList.remove("active");
         } else {
             document.querySelector("div.icon-p2 > img").classList.add("active");
             document.querySelector("div.icon-p1 > img").classList.remove("active");
+            document.querySelector("div.p2 > p.name").classList.add("active");
+            document.querySelector("div.p1 > p.name").classList.remove("active");
         }
     }
 
