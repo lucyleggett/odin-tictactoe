@@ -153,7 +153,7 @@ function GameController() {
         const victor = determineVictor();
         display.transitionToFinalResults();
         display.cueResults(victor);
-        if (determineVictor()) {
+        if (victor) {
             display.cueBackground("confetti");
             message.announceVictor(victor);
         } else {
@@ -247,13 +247,8 @@ function GameController() {
     const determineVictor = () => {
         let winner;
         
-        if (players[0].score === players[1]) {
-        } else if (players[0].score > players[1].score) {
-            winner = players[0]; 
-        } else { 
-            winner = players[1]; 
-        }
-        return winner;
+        if (players[0].score === players[1].score) return null;
+        return players[0].score > players[1].score ? players[0] : players[1];
     };
 
     return { playTurn, getActivePlayer, };
