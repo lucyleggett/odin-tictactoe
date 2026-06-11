@@ -87,6 +87,7 @@ h1 {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    height: 100dvh;
     width: clamp(calc(var(--board-width) + (var(--padding-standard) * 2)), 50vw, 370px);
     margin: 10px;
     padding: var(--padding-standard);
