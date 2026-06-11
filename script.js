@@ -96,8 +96,7 @@ function GameController() {
         });
     });
 
-    const nextBtn = document.querySelector(".next");
-    nextBtn.addEventListener("click", (event) => {
+    document.querySelector(".next").addEventListener("click", (event) => {
         event.preventDefault();
         const p1Input = document.getElementById("player-one");
         const inputValid = validate.checkInput(p1Input);
@@ -111,8 +110,7 @@ function GameController() {
         }
     });
 
-    const readyBtn = document.querySelector(".ready");
-    readyBtn.addEventListener("click", (event) => {
+    document.querySelector(".ready").addEventListener("click", (event) => {
         event.preventDefault();
         const p2Input = document.getElementById("player-two");
         const inputValid = validate.checkInput(p2Input);
@@ -247,17 +245,15 @@ function GameController() {
     }
 
     const determineVictor = () => {
-        let playersScores = [];
-        playersScores.push(players[0].score, players[1].score);
-        let highestScorer;
+        let winner;
         
-        if (playersScores.every(val => val === playersScores[0])) {
-        } else {
-            highestScorer = players.reduce((max, player) => 
-            player.score > max.score ? player : max
-            )
-            return highestScorer;
+        if (players[0].score === players[1]) {
+        } else if (players[0].score > players[1].score) {
+            winner = players[0]; 
+        } else { 
+            winner = players[1]; 
         }
+        return winner;
     };
 
     return { playTurn, getActivePlayer, };
@@ -339,12 +335,12 @@ function Display() {
         boardContainer.innerHTML = "";
         const newFragment = document.createDocumentFragment();
         for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            const box = document.createElement("button");
-            box.id = `${i}[${j}]`;
-            box.classList.add("box");
-            newFragment.appendChild(box);
-        }
+            for (let j = 0; j < 3; j++) {
+                const box = document.createElement("button");
+                box.id = `${i}[${j}]`;
+                box.classList.add("box");
+                newFragment.appendChild(box);
+            }
         }
         boardContainer.appendChild(newFragment);
     }
@@ -459,9 +455,6 @@ function Display() {
 }
 
 function Message() {
-    const mainMsg = document.querySelector(".main-message");
-    const resultsMsg = document.querySelector(".results-message");
-
     const showError = () => {
         const activeForm = document.querySelector("form:not(.disabled)");
         activeForm.querySelector(".validation").textContent = "Please select an icon";
@@ -472,14 +465,18 @@ function Message() {
         activeForm.querySelector(".validation").textContent = "";
     }
     
-    const announceWinner = (player) => { resultsMsg.textContent = `${player.name} won!`; };
+    const announceWinner = (player) => { 
+        document.querySelector(".results-message").textContent = `${player.name} won!`; 
+    }
 
-    const announceTie = () => { resultsMsg.textContent = "Game over! It's a tie..."; };
+    const announceTie = () => { 
+        document.querySelector(".results-message").textContent = "Game over! It's a tie..."; 
+    }
 
     const announceVictor = (victor) => {
-            document.querySelector(".drumroll").textContent = "And the winner is...";
-            document.querySelector(".victor").textContent = `${victor.name}`;
-        }
+        document.querySelector(".drumroll").textContent = "And the winner is...";
+        document.querySelector(".victor").textContent = `${victor.name}`;
+    }
     
     const announceTieResult = () => {
         document.querySelector(".drumroll").textContent = "And the winner is...";
