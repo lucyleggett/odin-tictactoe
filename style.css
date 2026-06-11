@@ -75,6 +75,8 @@ h1 {
     text-transform: uppercase;
     font-size: var(--fs-h1);
     letter-spacing: 2px;
+    word-break: normal;
+    overflow-wrap: normal;
 }
 
 .container {
